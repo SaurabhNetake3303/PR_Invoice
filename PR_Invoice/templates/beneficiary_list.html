@@ -1,0 +1,81 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Beneficiary List</title>
+</head>
+<body>
+    <form method="post" action="{% url 'beneficiary_create' %}">
+        {% csrf_token %}
+        <label for="beneficiary_name">Select Beneficiary Name:</label>
+        <select id="beneficiary_name" name="beneficiary_name" onchange="fetchBeneficiaryInfo()">
+            <option value="">--Select--</option>
+            {% for beneficiary in beneficiaries %}
+                <option value="{{ beneficiary.beneficiary_name }}">{{ beneficiary.beneficiary_name }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address">
+    
+        <label for="mobile">Mobile:</label>
+        <input type="text" id="mobile" name="mobile">
+    
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    
+        <!-- Add other form fields similarly... -->
+    
+        <button type="submit">Submit</button>
+    </form>
+    
+    <script>
+        function fetchBeneficiaryInfo() {
+            const name = document.getElementById('beneficiary_name').value;
+            if (name) {
+                fetch(`/get-beneficiary-info/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: new URLSearchParams({
+                        'name': name
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('address').value = data.address;
+                    document.getElementById('mobile').value = data.mobile;
+                    document.getElementById('email').value = data.email;
+                    document.getElementById('invoice_no').value = data.invoice_no;
+                    document.getElementById('profarma').value = data.profarma;
+                    document.getElementById('pr_no').value = data.pr_no;
+                    document.getElementById('requisition').value = data.requisition;
+                    document.getElementById('project').value = data.project;
+                    document.getElementById('gstin').value = data.gstin;
+                    document.getElementById('pan').value = data.pan;
+                    document.getElementById('aadhaar').value = data.aadhaar;
+                    document.getElementById('invoice_date').value = data.invoice_date;
+                    document.getElementById('purchase_order').value = data.purchase_order;
+                    document.getElementById('pr_date').value = data.pr_date;
+                    document.getElementById('material_indent').value = data.material_indent;
+                    document.getElementById('account_holder').value = data.account_holder;
+                    document.getElementById('account_no').value = data.account_no;
+                    document.getElementById('ifsc_code').value = data.ifsc_code;
+                    document.getElementById('bank_name').value = data.bank_name;
+                    document.getElementById('branch').value = data.branch;
+                    document.getElementById('upi_id').value = data.upi_id;
+                    document.getElementById('cheque_no').value = data.cheque_no;
+                    document.getElementById('cheque_date').value = data.cheque_date;
+                    document.getElementById('issuing_bank').value = data.issuing_bank;
+                });
+            }
+        }
+    </script>
+
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

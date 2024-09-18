@@ -1,0 +1,280 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Recommendation</title>
+    {% comment %} <link href="{% static 'assets/css/Payment-recommendation.css' %}" rel="stylesheet" /> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/Payment-recommendation.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header" style="justify-content: space-around;">
+            <div class="col-2">
+                <img src="{% static 'assets/img/x_vector.png' %}" alt="">
+            </div>
+            <div class="col-10 name">
+                <h2>PAYMENT RECOMMENDATION</h2>
+            </div>
+            <div class="col-2">
+
+            </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <table class="info-table">
+            <tr>
+                <td colspan="23"><b>Beneficiary Name</b></td>
+                <!-- <td colspan="2"></td> -->
+                <td class="benefit" colspan=""><b>Invoice No.</b></td>
+                <td colspan="2"><input type="number"></td>
+                <td colspan="0"><b>Invoice Date</b></td>
+                <td><input type="date"></td>
+                <!-- <td></td> -->
+            </tr>
+
+            <tr>
+                <td rowspan="2" colspan="23"><select type="text" class="select">
+                    {% for n in beneficiaryData %}   
+                <option value="" for="beneficiary_name">{{n.beneficiary_name}}</option>
+                {% endfor %}
+                {% comment %} <option value="">X Vector2</option> {% endcomment %}
+                    </select>
+
+                </td>
+                <td colspan=""><b>Proforma</b></td>
+                <td colspan="2"> {{n.profarma}}</td>
+                <td colspan=""><b>Purchase Order</b></td>
+                <td colspan=""><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan=""><b>PR #</b></td>
+                <td colspan="2"></td>
+                <td colspan=""><b>PR Date</b></td>
+                <td> <input type="date"></td>
+            </tr>
+            <tr>
+                <td rowspan="4" colspan="23">#N/A</td>
+            </tr>
+
+            <tr>
+                <td colspan=""><b>Requisition</b></td>
+                <td colspan="2"> <input type="text"></td>
+                <td colspan=""><b>Material Indent</b></td>
+                <td colspan="2"><input type="text"></td>
+            </tr>
+
+            <tr>
+                <td colspan=""><b>Project</b></td>
+                <td colspan="4"><input type="text"></td>
+            </tr>
+
+            <tr>
+                <td colspan=""><b>GSTIN</b></td>
+                <td colspan="4"><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan=""><b>Mobile</b></td>
+                <td colspan="22"><input type="number"></td>
+                <td colspan=""><b>PAN</b></td>
+                <td colspan="4"><input type="number"></td>
+            </tr>
+            <tr>
+                <td colspan=""><b>Email ID</b></td>
+                <td colspan="22"><input type="text"></td>
+                <td colspan=""><b>Adhaar</b></td>
+                <td colspan="4"><input type="number"></td>
+            </tr>
+        </table>
+
+        <table class="item-table">
+            <tr>
+                <th style="width: 50px; text-align: center;">SR.NO</th>
+                <th style="width: 250px; text-align: center;">Description</th>
+                <th style="width: 100px; text-align: center;">Quantity</th>
+                <th style="width: 100px; text-align: center;">Unit</th>
+                <th style="width: 100px; text-align: center;">GST Rate</th>
+                <th style="width: 100px; text-align: center;">Rate</th>
+                <th style="width: 150px; text-align: center;">Amount</th>
+            </tr>
+            <!-- Repeat this <tr> block for each item -->
+            <tr class="table-data">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- 2 -->
+            <tr class="table-data1">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- 3-->
+            <tr class="table-data">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- 4-->
+            <tr class="table-data1">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- 5-->
+            <tr class="table-data">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- 6-->
+            <tr class="table-data1">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- 7-->
+            <tr class="table-data">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <table class="total-table">
+            <tr>
+                <td colspan="3"><b>BANK DETAILS:</b></td>
+                <td><b>Subtotal</b></td>
+                <td colspan="3"><input type="text" placeholder="₹ 0.00"></td>
+            </tr>
+            <tr>
+                <td><b>Account Holder</b></td>
+                <td class="bank-details" colspan="2"><input type="text" placeholder="Account Hoder Name"></td>
+               
+                <td><b>CGST</b></td>
+                <td colspan="3"><input type="text" placeholder="₹ 0.00"></td>
+            </tr>
+            <tr>
+                <td><b>Account Holder</b></td>
+                <td colspan="2"><input type="text" placeholder="Account Hoder Name"></td>
+                
+                <td><b>SGST</b></td>
+                <td colspan="3"><input type="text" placeholder="₹ 0.00"></td>
+            </tr>
+            <tr>
+                <td><b>IFSC Code</b></td>
+                <td colspan="2"><input type="text" placeholder="#N/A"></td>
+                <td><b>TDS (@)</b></td>
+                <td colspan="3"><input type="text" placeholder="₹ 0.00"></td>
+            </tr>
+            <tr>
+                <td><b>Bank Name</b></td>
+                <td colspan="2"><input type="text" placeholder="#N/A"></td>
+                <td><b>Retention (-)</b></td>
+                <td colspan="3"><input type="text" placeholder="₹ 0.00"></td>
+            </tr>
+            <tr>
+                <td><b>Branch</b></td>
+                <td colspan="2"><input type="text" placeholder="#N/A"></td>
+                <td><b>Advance (-)</b></td>
+                <td colspan="3"><input type="text" placeholder="₹ 0.00"></td>
+            </tr>
+            <tr>
+                <td><b>UPI ID</b></td>
+                <td colspan="2"><input type="text" placeholder="#N/A"></td>
+                <td><b>Debit Note (-)</b></td>
+                <td colspan="3"><input type="text" placeholder="₹ 0.00"></td>
+            </tr>
+            <tr>
+                <td rowspan="2"><b>Cheque</b></td>
+                <td colspan=""><b>Number</b></td>
+                <td><input type="text" placeholder="#N/A"></td>
+                <td colspan=""><b>Round Off</b></td>
+                <td colspan="1"><input type="text" placeholder="₹ 0.00"></td>
+                <!-- <td colspan="2"></td> -->
+            </tr>
+            <tr>
+                <td><b>Date</b></td>
+                <td colspan="1"><input type="date" placeholder="#N/A"></td>
+                <td rowspan="2"><b>Net Payable</b></td>
+                <td rowspan="2"> </td>
+                <!-- <td></td> -->
+            </tr>
+            <tr>
+                <td  ><b>Issuing Bank</b></td>
+
+                <td colspan="2"><input type="text" placeholder="#N/A"></td>
+                
+            </tr>
+        </table>
+    </form>
+        {% comment %} {% endfor %} {% endcomment %}
+        <br>
+
+        <h3><i>Recommended & Verified By:</i></h3><br><br><br><br><br><br>
+        <br>
+
+        <div class="sign">
+            <h4>ACCOUNTS OFFICER</h4>
+            <h4>PROCUREMENT OFFICER</h4>
+            <h4>CHIEF ACCOUNT OF</h4>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#vendor_select').change(function() {
+            var vendor_id = $(this).val();
+            $.ajax({
+                url: "{% url 'get_beneficiary_details' %}",
+                data: {
+                    'beneficiary_id': beneficiary_id
+                },
+                success: function(data) {
+                    $('#id_address').val(data.address);
+                    $('#id_mobile').val(data.mobile);
+                    $('#id_email').val(data.email);
+                    $('#id_gstin').val(data.gstin);
+                    $('#id_pan').val(data.pan);
+                    $('#id_bank_name').val(data.bank_name);
+                    $('#id_account_number').val(data.account_number);
+                    $('#id_ifsc_code').val(data.ifsc_code);
+                    $('#id_branch').val(data.branch);
+                }
+            });
+        });
+    </script>   
+</body>
+
+</html>

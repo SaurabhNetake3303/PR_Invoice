@@ -1,0 +1,234 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Recommendation</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/Payment-recommendation.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header" style="justify-content: space-around;">
+            <div class="col-2">
+                <img src="{% static 'assets/img/x_vector.png' %}" alt="">
+            </div>
+            <div class="col-10 name">
+                <h2>PAYMENT RECOMMENDATION</h2>
+            </div>
+            <div class="col-2">
+
+            </div>
+        </div>
+        
+        <form action="pr_request_data" method="post"  id="content" class="content">
+            {% csrf_token %}
+<!--        {{ form.as_p }}-->
+        <table class="info-table">
+            <tr style="" class="info-table">
+                <td colspan="23"><b>Beneficiary Name</b></td>
+                <td class="benefit" colspan=""><b>Invoice No.</b></td>
+                <td colspan="2"><input type="number" id="" name="invoice_no" style=" border:none; outline:none;"></td>
+                <td colspan="0"><b>Invoice Date</b></td>
+                <td><input type="date" name="invoice_date" style=" border:none; outline:none;"></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" colspan="23">
+                    <input type="text" id="beneficiary_name" class="select" name="beneficiary_name" style=" border:none; outline:none;">
+                </td>
+                <td colspan=""><b>Proforma</b></td>
+                <td colspan="2"><input type="text" class="input" name="proforma" style=" border:none; outline:none;"></td>
+                <td colspan=""><b>Purchase Order</b></td>
+                <td colspan=""><input type="number" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td colspan=""><b>PR #</b></td>
+                <td colspan="2"><input type="number" id="pr_no" name="pr_no" style=" border:none; outline:none;"></td>
+                <td colspan=""><b>PR Date</b></td>
+                <td> <input type="date" id="pr_date" name="pr_date" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td rowspan="4" colspan="23"><input type="text" id="address" name="address" style=" border:none; outline:none;"></td>
+            </tr>
+
+            <tr>
+                <td colspan=""><b>Requisition</b></td>
+                <td colspan="2"> <input type="text" name="requisition" style=" border:none; outline:none;"></td>
+                <td colspan=""><b>Material Indent</b></td>
+                <td colspan="2"><input type="text" name="material_indent" style=" border:none; outline:none;"></td>
+            </tr>
+
+            <tr>
+                <td colspan=""><b>Project</b></td>
+                <td colspan="4"><input type="text" name="project" style=" border:none; outline:none;"></td>
+            </tr>
+
+            <tr>
+                <td colspan=""><b>GSTIN</b></td>
+                <td colspan="4"><input type="number" id="GSTIN" name="gstin" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td colspan=""><b>Mobile</b></td>
+                <td colspan="22"><input type="number" id="mobile" name="mobile" style=" border:none; outline:none;"></td>
+                <td colspan=""><b>PAN</b></td>
+                <td colspan="4"><input type="number" id="pan" name="pan" style=" border:none; outline:none;" ></td>
+            </tr>
+            <tr>
+                <td colspan=""><b>Email ID</b></td>
+                <td colspan="22"><input type="text" id="email" name="email" style=" border:none; outline:none;"></td>
+                <td colspan=""><b>Adhaar</b></td>
+                <td colspan="4"><input type="number" id="adhaar" name="adhaar" style=" border:none; outline:none;"></td>
+            </tr>
+        </table>
+
+        <table class="item-table">
+            <thead>
+            <tr>
+                <th style="width: 30px; text-align: center;">SR.NO</th>
+                <th style="width: 250px; text-align: center;">Description</th>
+                <th style="width: 100px; text-align: center;">Quantity</th>
+                <th style="width: 100px; text-align: center;">Unit</th>
+                <th style="width: 100px; text-align: center;">GST Rate</th>
+                <th style="width: 100px; text-align: center;">Rate</th>
+                <th style="width: 100px; text-align: center;">Amount</th>
+                <th scope="col" class="NoPrint">
+                    <button type="button" class="btn-plus btn-sm btn-success" onclick="BtnAdd()">+</button>
+                </th>
+            </tr>
+            </thead>
+            <!-- Repeat this <tr> block for each item -->
+            <tbody id="TBody">
+            <tr class="table-data" id="TRow">
+                <td></td>
+                <td><input type="text" style=" border:none; outline:none;"></td>
+                <td><input type="number" class="quantity" oninput="calculateAmount()" style=" border:none; outline:none;"></td>
+                <td><input type="text" style=" border:none; outline:none;"></td>
+                <td><input type="number" class="gst" oninput="calculateAmount()" placeholder="%" style=" border:none; outline:none;"></td>
+                <td><input type="number" class="rate" oninput="calculateAmount()" placeholder="₹ 0.00" style=" border:none; outline:none;"></td>
+                <td><input type="number" class="amount" oninput="calculateAmount()" placeholder="₹ 0.00" style=" border:none; outline:none;"></td>
+                <td class="NoPrint"><button type="button" class="btn btn-sm btn-danger" onclick="BtnDel(this)">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="total-table">
+            <tr>
+                <td colspan="3"><b>BANK DETAILS:</b></td>
+                <td><b>Subtotal</b></td>
+                <td colspan="3"><input type="number" name="subtotal" id="subtotal" placeholder="₹ 0.00" readonly style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td><b>Account Holder</b></td>
+                <td class="bank-details" colspan="2"><input type="text" name="account_holder" placeholder="Account Hoder Name" id="accout_holder" style=" border:none; outline:none;"></td>
+
+                <td><b>CGST</b></td>
+                <td colspan="3"><input type="number" step="0.01" name="cgst" id="cgst"  placeholder="%" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td><b>Account Number</b></td>
+                <td colspan="2"><input type="text" name="account_number" placeholder="Account Number " id="account_number" style=" border:none; outline:none;"></td>
+
+                <td><b>SGST</b></td>
+                <td colspan="3"><input type="number" step="0.01" name="sgst" id="sgst" placeholder="%" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td><b>IFSC Code</b></td>
+                <td colspan="2"><input type="text" name="ifsc_code" placeholder="#N/A" id="ifsc_code" style=" border:none; outline:none;"></td>
+                <td><b>TDS(@)</b></td>
+                <td colspan="3"><input id="tds" name="tds" value="0" oninput="calculateAmount()" placeholder="%" step="0.01" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td><b>Bank Name</b></td>
+                <td colspan="2"><input type="text" name="bank_name" placeholder="#N/A" id="bank_name" style=" border:none; outline:none;"></td>
+                <td><b>Retention (-)</b></td>
+                <td colspan="3"><input id="retention" name="retention" value="0" oninput="calculateAmount()" step="0.01" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td><b>Branch</b></td>
+                <td colspan="2"><input type="text" name="branch" placeholder="#N/A" id="branch" style=" border:none; outline:none;"></td>
+                <td><b>Advance (-)</b></td>
+                <td colspan="3"><input type="number" name="advance" id="advance" value="0" oninput="calculateAmount()" step="0.01" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td><b>UPI ID</b></td>
+                <td colspan="2"><input type="text" name="upi_id" placeholder="#N/A" id="upi_id" style=" border:none; outline:none;"></td>
+                <td><b>Debit Note (-)</b></td>
+                <td colspan="3"><input type="number" name="debit_note" id="debitNote" value="0" oninput="calculateAmount()" step="0.01" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td rowspan="2"><b>Cheque</b></td>
+                <td colspan=""><b>Number</b></td>
+                <td><input type="text" placeholder="#N/A" style=" border:none; outline:none;"></td>
+                <td colspan=""><b>Round Off</b></td>
+                <td colspan="1"><input type="number" name="round_off" id="roundOff" value="0" oninput="calculateAmount()" step="0.01" style=" border:none; outline:none;"></td>
+            </tr>
+            <tr>
+                <td><b>Date</b></td>
+                <td colspan="1"><input type="date" placeholder="#N/A" style=" border:none; outline:none;"></td>
+                <td rowspan="2"><b>Net Payable</b></td>
+                <td rowspan="2"><input type="number" name="net_payable" id="netPayable" placeholder="₹ 0.00" readonly style=" border:none; outline:none;"> </td>
+                <!-- <td></td> -->
+            </tr>
+            <tr>
+                <td  ><b>Issuing Bank</b></td>
+
+                <td colspan="2"><input type="text" placeholder="#N/A" id="Issuing-bank" style=" border:none; outline:none;"></td>
+
+            </tr>
+        </table>
+
+        <button type="submit">Submit</button>
+
+     </form>
+
+        <h3><i>Recommended & Verified By:</i></h3><br><br>
+
+        <div class="sign">
+            <h4>ACCOUNTS OFFICER</h4>
+            <h4>PROCUREMENT OFFICER</h4>
+            <h4>CHIEF ACCOUNT OF</h4>
+        </div>
+            <br><br><br>
+    {{ form.as_p }}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $('#beneficiary_select').change(function() {
+            var beneficiary_id = $(this).val();
+            $.ajax({
+                url: "{% url 'get_beneficiary_details' %}",
+                data: {
+                    'beneficiary_id':beneficiary_id
+                },
+                success: function(data) {
+                    $('#beneficiary_name').val(data.beneficiary_name);
+                    $('#address').val(data.address);
+                    $('#pr_no').val(data.pr_no);
+                    $('#pr_date').val(data.pr_date);
+                    $('#GSTIN').val(data.gstin);
+                    $('#mobile').val(data.mobile);
+                    $('#email').val(data.email);
+                    $('#adhaar').val(data.aadhaar);
+                    $('#pan').val(data.pan);
+                    $('#accout_holder').val(data.account_holder);
+                    $('#account_number').val(data.account_number);
+                    $('#ifsc_code').val(data.ifsc_code);
+                    $('#bank_name').val(data.bank_name);
+                    $('#branch').val(data.branch);
+                    $('#upi_id').val(data.upi_id);
+                }
+            });
+        })
+
+    </script>
+</body>
+</html>

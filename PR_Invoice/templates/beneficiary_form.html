@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Beneficiary</title>
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/style.css' %}"> {% endcomment %}
+</head>
+<body>
+    <h1>Create Beneficiary</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="beneficiary_name">Beneficiary Name:</label>
+        <input type="text" id="beneficiary_name" name="beneficiary_name" required><br><br>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="4" required></textarea><br><br>
+
+        <label for="mobile">Mobile:</label>
+        <input type="text" id="mobile" name="mobile" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="invoice_no">Invoice No:</label>
+        <input type="text" id="invoice_no" name="invoice_no" required><br><br>
+
+        <label for="profarma">Profarma:</label>
+        <input type="text" id="profarma" name="profarma" required><br><br>
+
+        <label for="pr_no">PR No:</label>
+        <input type="text" id="pr_no" name="pr_no" required><br><br>
+
+        <label for="requisition">Requisition:</label>
+        <input type="text" id="requisition" name="requisition" required><br><br>
+
+        <label for="project">Project:</label>
+        <input type="text" id="project" name="project" required><br><br>
+
+        <label for="gstin">GSTIN:</label>
+        <input type="text" id="gstin" name="gstin" required><br><br>
+
+        <label for="pan">PAN:</label>
+        <input type="text" id="pan" name="pan" required><br><br>
+
+        <label for="aadhaar">Aadhaar:</label>
+        <input type="text" id="aadhaar" name="aadhaar" required><br><br>
+
+        {% comment %} <label for="invoice_date">Invoice Date:</label> {% endcomment %}
+        {% comment %} <input type="date" id="invoice_date" name="invoice_date" required><br><br> {% endcomment %}
+
+        <label for="purchase_order">Purchase Order:</label>
+        <input type="text" id="purchase_order" name="purchase_order" required><br><br>
+
+        {% comment %} <label for="pr_date">PR Date:</label> {% endcomment %}
+        {% comment %} <input type="date" id="pr_date" name="pr_date" required><br><br> {% endcomment %}
+
+        <label for="material_indent">Material Indent:</label>
+        <input type="text" id="material_indent" name="material_indent" required><br><br>
+
+        <label for="account_holder">Account Holder:</label>
+        <input type="text" id="account_holder" name="account_holder" required><br><br>
+
+        <label for="account_no">Account No:</label>
+        <input type="text" id="account_no" name="account_no" required><br><br>
+
+        <label for="ifsc_code">IFSC Code:</label>
+        <input type="text" id="ifsc_code" name="ifsc_code" required><br><br>
+
+        <label for="bank_name">Bank Name:</label>
+        <input type="text" id="bank_name" name="bank_name" required><br><br>
+
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required><br><br>
+
+        <label for="upi_id">UPI ID:</label>
+        <input type="text" id="upi_id" name="upi_id" placeholder="Optional"><br><br>
+
+        <label for="cheque_no">Cheque No:</label>
+        <input type="text" id="cheque_no" name="cheque_no" placeholder="Optional"><br><br>
+
+        {% comment %} <label for="cheque_date">Cheque Date:</label> {% endcomment %}
+        {% comment %} <input type="date" id="cheque_date" name="cheque_date" placeholder="Optional"><br><br> {% endcomment %}
+
+        <label for="issuing_bank">Issuing Bank:</label>
+        <input type="text" id="issuing_bank" name="issuing_bank" placeholder="Optional"><br><br>
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
