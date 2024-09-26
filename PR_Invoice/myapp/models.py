@@ -1,7 +1,9 @@
 from django.db import models
 
+from datetime import datetime
 # Create your models here.
 # myapp/models.py
+
 
 class Beneficiary(models.Model):
     beneficiary_name = models.CharField(max_length=255)
@@ -22,18 +24,20 @@ class Beneficiary(models.Model):
 
     def __str__(self):
         return self.beneficiary_name
-    
-from django.db import models
+
 
 class PR_Request(models.Model):
     beneficiary_name = models.CharField(max_length=255, default="")
-    address = models.TextField(max_length=255, default="")  # Allow NULL and blank values
+    address = models.TextField(max_length=255, default="")
     invoice_no = models.PositiveIntegerField(default=0)
     invoice_date = models.DateField()
     proforma = models.CharField(max_length=255, default="")
     purchase_order = models.PositiveIntegerField(default=0)
     pr_no = models.PositiveIntegerField(default=0)
     pr_date = models.DateField()
+    # time = datetime.now()
+    # pr_date = time.strftime("%Y-%m-%d")
+
     requisition = models.CharField(max_length=255, default="")
     material_indent = models.CharField(max_length=255, default="")
     project = models.CharField(max_length=255, default="")
@@ -52,16 +56,20 @@ class PR_Request(models.Model):
     upi_id = models.CharField(max_length=255, default="")
 
     # Financial Details
-    subtotal = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    cgst = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    sgst = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    tds = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    retention = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    advance = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    debit_note = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    round_off = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    net_payable = models.DecimalField(max_digits=15, decimal_places=2, default=0)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    cgst = models.DecimalField(max_digits=10, decimal_places=2)
+    sgst = models.DecimalField(max_digits=10, decimal_places=2)
+    tds = models.DecimalField(max_digits=10, decimal_places=2)
+    retention = models.DecimalField(max_digits=10, decimal_places=2)
+    advance = models.DecimalField(max_digits=10, decimal_places=2)
+    debit_note = models.DecimalField(max_digits=10, decimal_places=2)
+
+    # Make check_date nullable and blank
+    check_no = models.IntegerField(null=True, blank=True)
+    check_date = models.DateField(null=True, blank=True)
+
+    round_off = models.DecimalField(max_digits=10, decimal_places=2)
+    net_payable = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         db_table = "myapp_pr_request"
-
